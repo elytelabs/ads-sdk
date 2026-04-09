@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Elyte Labs Ads Test</string>
+    <string name="test_heading">Elyte Labs Ad Network Testing</string>
+    <string name="show_interstitial">Show Interstitial</string>
+    <string name="interstitial_not_loaded">Interstitial ad not loaded yet</string>
+</resources>

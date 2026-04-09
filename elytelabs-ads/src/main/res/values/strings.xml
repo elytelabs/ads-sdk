@@ -4,4 +4,6 @@
     <string name="install">Install</string>
     <string name="close_ad">Close ad</string>
     <string name="ad_icon_description">%s app icon</string>
+    <string name="ad_rating_format">%s ★</string>
+    <string name="ad_installs_format">%s installs</string>
 </resources>

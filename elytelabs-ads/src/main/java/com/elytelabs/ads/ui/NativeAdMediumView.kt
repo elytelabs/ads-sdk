@@ -55,6 +55,23 @@ class NativeAdMediumView @JvmOverloads constructor(
         binding.tvAdDescription.text = adModel.description
         binding.btnInstall.text = context.getString(R.string.install)
 
+        // Rating and Installs meta row
+        if (adModel.rating != null || !adModel.installs.isNullOrEmpty()) {
+            binding.metaRow.visibility = View.VISIBLE
+            binding.tvRating.visibility = if (adModel.rating != null) View.VISIBLE else View.GONE
+            binding.tvInstalls.visibility = if (!adModel.installs.isNullOrEmpty()) View.VISIBLE else View.GONE
+            
+            adModel.rating?.let {
+                val roundedRating = String.format("%.1f", it)
+                binding.tvRating.text = roundedRating
+            }
+            if (!adModel.installs.isNullOrEmpty()) {
+                binding.tvInstalls.text = adModel.installs
+            }
+        } else {
+            binding.metaRow.visibility = View.GONE
+        }
+
         // Hero background: feature graphic → blurred icon fallback
         val heroUrl = adModel.featureGraphic
         if (!heroUrl.isNullOrEmpty()) {

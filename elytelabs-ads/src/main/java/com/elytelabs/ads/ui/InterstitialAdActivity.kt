@@ -3,6 +3,7 @@ package com.elytelabs.ads.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
@@ -15,6 +16,7 @@ import com.elytelabs.ads.R
 import com.elytelabs.ads.databinding.InterstitialAdBinding
 import com.elytelabs.ads.models.AdModel
 import jp.wasabeef.glide.transformations.BlurTransformation
+import java.util.Locale
 
 /**
  * Full-screen interstitial ad activity.
@@ -63,6 +65,24 @@ class InterstitialAdActivity : AppCompatActivity() {
         binding.tvAdTitle.text = adModel.title
         binding.tvAdDescription.text = adModel.description
         binding.btnInstall.text = getString(R.string.install)
+
+        // Rating and Installs meta row
+        if (adModel.rating != null || !adModel.installs.isNullOrEmpty()) {
+            binding.metaRow.visibility = View.VISIBLE
+            binding.tvRating.visibility = if (adModel.rating != null) View.VISIBLE else View.GONE
+            binding.tvInstalls.visibility = if (!adModel.installs.isNullOrEmpty()) View.VISIBLE else View.GONE
+            
+            adModel.rating?.let {
+                // Ensure rating is nicely formatted (e.g. 4.5 instead of 4.500000000)
+                val roundedRating = String.format(Locale.ROOT,"%.1f", it)
+                binding.tvRating.text = roundedRating
+            }
+            if (!adModel.installs.isNullOrEmpty()) {
+                binding.tvInstalls.text = adModel.installs
+            }
+        } else {
+            binding.metaRow.visibility = View.GONE
+        }
 
         // Accessibility
         binding.ivAdImage.contentDescription = adModel.title

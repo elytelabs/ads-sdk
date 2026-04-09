@@ -118,18 +118,65 @@
             app:layout_constraintTop_toBottomOf="@+id/tvAdTitle"
             tools:text="App description goes here and might span two lines" />
 
+        <!-- Rating + Installs row -->
+        <LinearLayout
+            android:id="@+id/metaRow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="centerVertical"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/iconContainer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAdDescription">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_star"
+                android:importantForAccessibility="no" />
+
+            <TextView
+                android:id="@+id/tvRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:textColor="@color/ads_text_light"
+                android:textSize="13sp"
+                tools:text="4.5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:text="·"
+                android:textColor="@color/ads_text_light"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvInstalls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/ads_text_light"
+                android:textSize="13sp"
+                tools:text="100,000+ installs" />
+
+        </LinearLayout>
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnInstall"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:text="@string/install"
             android:textAllCaps="false"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/ads_white"
             android:background="@drawable/ads_btn_bg"
-            app:layout_constraintTop_toBottomOf="@+id/iconContainer" />
+            app:layout_constraintTop_toBottomOf="@+id/metaRow" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

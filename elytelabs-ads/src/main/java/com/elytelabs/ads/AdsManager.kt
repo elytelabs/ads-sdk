@@ -230,6 +230,9 @@ object AdsManager {
             if (!ad.iconUrl.isNullOrEmpty()) {
                 Glide.with(context).load(ad.iconUrl).preload()
             }
+            if (!ad.featureGraphic.isNullOrEmpty()) {
+                Glide.with(context).load(ad.featureGraphic).preload()
+            }
         }
     }
 

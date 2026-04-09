@@ -69,16 +69,22 @@ class InterstitialAdActivity : AppCompatActivity() {
         binding.ivAdIcon.contentDescription = getString(R.string.ad_icon_description, adModel.title)
         binding.btnClose.contentDescription = getString(R.string.close_ad)
 
-        // Load blurred background + crisp icon
-        if (!adModel.iconUrl.isNullOrEmpty()) {
+        // Load hero background: feature graphic (crisp) → blurred icon (fallback)
+        val heroUrl = adModel.featureGraphic
+        if (!heroUrl.isNullOrEmpty()) {
+            // Feature graphic available — show it directly, no blur needed
+            Glide.with(this).load(heroUrl).into(binding.ivAdImage)
+        } else if (!adModel.iconUrl.isNullOrEmpty()) {
+            // No feature graphic — blur the icon as ambient background
             Glide.with(this)
                 .load(adModel.iconUrl)
                 .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
                 .into(binding.ivAdImage)
+        }
 
-            Glide.with(this)
-                .load(adModel.iconUrl)
-                .into(binding.ivAdIcon)
+        // Crisp app icon
+        if (!adModel.iconUrl.isNullOrEmpty()) {
+            Glide.with(this).load(adModel.iconUrl).into(binding.ivAdIcon)
         }
 
         // Apply theme overrides

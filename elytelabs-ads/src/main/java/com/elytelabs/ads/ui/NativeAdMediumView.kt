@@ -45,7 +45,8 @@ class NativeAdMediumView @JvmOverloads constructor(
 
     /**
      * Loads and displays a medium native ad.
-     * The hero image is a blurred version of the app icon.
+     *
+     * Hero image priority: feature graphic (crisp) → blurred icon (fallback).
      */
     fun loadAd() {
         val adModel = AdsManager.bannerAdModel ?: return
@@ -54,14 +55,19 @@ class NativeAdMediumView @JvmOverloads constructor(
         binding.tvAdDescription.text = adModel.description
         binding.btnInstall.text = context.getString(R.string.install)
 
-        if (!adModel.iconUrl.isNullOrEmpty()) {
-            // Blurred hero background
+        // Hero background: feature graphic → blurred icon fallback
+        val heroUrl = adModel.featureGraphic
+        if (!heroUrl.isNullOrEmpty()) {
+            Glide.with(this).load(heroUrl).into(binding.ivAdImage)
+        } else if (!adModel.iconUrl.isNullOrEmpty()) {
             Glide.with(this)
                 .load(adModel.iconUrl)
                 .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
                 .into(binding.ivAdImage)
+        }
 
-            // Crisp icon overlay
+        // Crisp icon overlay
+        if (!adModel.iconUrl.isNullOrEmpty()) {
             Glide.with(this).load(adModel.iconUrl).into(binding.ivAdIcon)
         }
 

@@ -7,6 +7,8 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import android.os.Handler
+import android.os.Looper
 import com.bumptech.glide.Glide
 import com.elytelabs.ads.AdsManager
 import com.elytelabs.ads.databinding.BannerAdBinding
@@ -18,6 +20,14 @@ class BannerAdView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val binding: BannerAdBinding = BannerAdBinding.inflate(LayoutInflater.from(context), this, true)
+
+    private val refreshHandler = Handler(Looper.getMainLooper())
+    private val refreshRunnable = object : Runnable {
+        override fun run() {
+            loadAd()
+            refreshHandler.postDelayed(this, 30_000L) // Refresh every 30 seconds
+        }
+    }
 
     init {
         visibility = View.GONE
@@ -41,6 +51,16 @@ class BannerAdView @JvmOverloads constructor(
             binding.btnInstall.setOnClickListener(clickListener)
             visibility = View.VISIBLE
         }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        refreshHandler.postDelayed(refreshRunnable, 30_000L)
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        refreshHandler.removeCallbacks(refreshRunnable)
     }
 
     private fun openPlayStore(packageName: String) {

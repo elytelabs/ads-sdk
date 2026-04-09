@@ -1,27 +1,21 @@
-1. verify on all devices
-2. We should download reponse once and reuse it until app is open or for 24 hours (whichever is first) since we are grabbing all the ads at once and response provides 50 items 
-3. Randomize the ads shown in banner and interstitial so it isnt always the first item
-4. Exclude current app from the list if exists
-5. Add proper documentation , readme and comments
-6. the primary use of this app is fallback for admob ads when not availabe only then show ads from this library so keep that in mind and proceed accordingly
-7. these are the api params 
-GET
-/api/promote
+# Elyte Labs Ads - SDK Roadmap
 
-Public
-Edge Cached
-Public endpoint returning a curated, shuffled list of Elyte Labs apps and websites. Designed specifically for use as fallback promotional content inside Android apps when AdMob has no fill. Bypasses database entirely on repeat requests via 1-hour Edge caching.
+## Completed Features ✓
+- [x] Modernize architecture to pure multi-module `elytelabs-ads` library wrapper.
+- [x] Standardize UI configurations bridging API 26 support to API 36 Edge-to-Edge logic.
+- [x] Design premium UI aesthetics mimicking massive traditional Ad Networks (Full screen blur).
+- [x] Implement core Query Parameters ensuring dynamic API payloads.
+- [x] Prevent recursive promotion (safely pass `exclude=packageName` API constraint).
+- [x] Establish a 24-Hour Zero-Latency Cache via local `SharedPreferences`.
+- [x] Execute automatic Ad array randomization to eliminate ad-fatigue. 
 
-Parameters
-type
-string
-Filter results: "apps", "websites", or "all".
-limit
-number
-Max items to return. Max: 50
-exclude
-string
-Package ID or Website ID to exclude.
-featured
-boolean
-If "true", returns only items marked as featured.
+## Active Requirements
+- [ ] **Device Verification:** Deep verify layouts / dependencies locally on diverse physical emulators prior to release.
+- [ ] **Fall-Back Ecosystem Integration:** Draft explicit README instructions on strictly invoking `AdsManager` exclusively on `onAdFailedToLoad` callbacks from primary systems (like AdMob) to optimize revenue hierarchy.
+- [ ] **SDK Documentation:** Generate a proper `README.md` containing initialization code blocks, lifecycle patterns, and SDK restrictions. 
+
+## Future Expansion Opportunities
+- [ ] **Native Ad Formats:** Construct a customizable `ElyteLabsNativeAdView` so developer partners can integrate ads flawlessly indoors, like within `RecyclerViews` seamlessly matching the app design!
+- [ ] **True Autonomous Lifecycle:** Inject `androidx.lifecycle:lifecycle-process` so developers never have to manually call `AdsManager` inside their `Activities` again. The library will track background/foreground transitions independently!
+- [ ] **Analytics Engine:** Introduce a lightweight POST subsystem that pings the Elyte Labs dashboard whenever a user looks at an ad (Impression) versus clicks it (Click_Through).
+- [ ] **Jitpack Release Configuration:** Build out the publishing workflow configurations to automate pushing code straight to JitPack via GitHub triggers.
